@@ -20,7 +20,7 @@ export class PdfController {
 
     @Post('generate-document')
     async generateDocument() {
-        return this.pdfService.generateDocument();
+        return this.pdfService.generateDocument(this.x.token, this.x.templates_id);
     }
 
 }

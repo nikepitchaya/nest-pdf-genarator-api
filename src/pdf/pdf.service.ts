@@ -5,34 +5,41 @@ import axios from 'axios';
 export class PdfService {
     async getTemplate(token: string, templateId: string,) {
         const response = await axios.get(`https://us1.pdfgeneratorapi.com/api/v4/templates/${templateId}`, {
+
             headers: {
+                'content-type': 'application/json',
                 Authorization: `Bearer ${token}`
             },
         });
-        console.log(response)
         return response.data;
     }
 
     async getDocument(token: string) {
         const response = await axios.get(`https://us1.pdfgeneratorapi.com/api/v4/documents`, {
+            params: {
+                start_date: '2023-01-01 12:00:00',
+                end_date: '2023-05-04 12:00:00',
+                page: '1',
+                per_page: '10'
+            },
             headers: {
+                'content-type': 'application/json',
                 Authorization: `Bearer ${token}`
             },
 
         });
-        console.log(response)
         return response.data;
     };
 
-    async generateDocument() {
+    async generateDocument(token: string, templateId: string) {
         const response = await axios.post(`https://us1.pdfgeneratorapi.com/api/v4/documents/generate`, {
             headers: {
                 'content-type': 'application/json',
-                Authorization: 'Bearer REPLACE_BEARER_TOKEN'
+                Authorization: `Bearer ${token}`
             },
             body: {
                 template: {
-                    id: 'REPLACE_TEMPLATE_ID',
+                    id: templateId,
                     data: { id: 123, name: 'John Smith', birthdate: '2000-01-01', role: 'Developer' }
                 },
                 format: 'pdf',
