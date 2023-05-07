@@ -8,16 +8,18 @@ export class PdfController {
     x: KeyModel = new KeyConstant()
 
     constructor(private readonly pdfService: PdfService) { }
-
+    @Get('template')
+    async getTemplate() {
+        return this.pdfService.getTemplate(this.x.token)
+    }
     @Get('templates')
     async getTemplates() {
-        return this.pdfService.getTemplate(this.x.token, this.x.templates_id)
+        return this.pdfService.getTemplates(this.x.token, this.x.templates_id)
     }
     @Get('documents')
     async getDocuments() {
         return this.pdfService.getDocument(this.x.token)
     }
-
     @Post('generate-document')
     async generateDocument() {
         return this.pdfService.generateDocument(this.x.token, this.x.templates_id);
